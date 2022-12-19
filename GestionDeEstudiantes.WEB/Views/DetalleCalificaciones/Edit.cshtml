@@ -1,0 +1,51 @@
+﻿@model GestionDeEstudiantes.WEB.Entities.DetalleCalificaciones
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2 class="text-center my-3">Editar Detalle Calificación</h2>
+
+<hr />
+<div class="row d-flex justify-content-center">
+    <div class="col-md-4 bg-info p-5 rounded-3">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="IdCalificacion" class="control-label"></label>
+                <select asp-for="IdCalificacion" class="form-control" asp-items="ViewBag.IdCalificacion"></select>
+                <span asp-validation-for="IdCalificacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEstudiante" class="control-label"></label>
+                <select asp-for="IdEstudiante" class="form-control" asp-items="ViewBag.IdEstudiante"></select>
+                <span asp-validation-for="IdEstudiante" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Calificacion" class="control-label"></label>
+                <input asp-for="Calificacion" class="form-control" />
+                <span asp-validation-for="Calificacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CalificacionLiteral" class="control-label"></label>
+                <input asp-for="CalificacionLiteral" class="form-control" />
+                <span asp-validation-for="CalificacionLiteral" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaCreacion" class="control-label"></label>
+                <input asp-for="FechaCreacion" class="form-control" />
+                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary my-3" />
+            </div>
+        </form>
+        <div>
+            <a class="btn btn-secondary" asp-action="Index">Volver a la lista</a>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

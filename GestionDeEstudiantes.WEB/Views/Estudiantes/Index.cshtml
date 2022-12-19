@@ -1,0 +1,111 @@
+﻿@model IEnumerable<GestionDeEstudiantes.WEB.Entities.Estudiantes>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<h2 class="text-center my-3">Gestión de Estudiantes</h2>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Nuevo Estudiante</a>
+</p>
+<div class="row">
+    <div class="col-12">        
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" id="tablaEstudiantes" style="width:100%;">
+                    <thead>
+                        <tr class="text-center">
+                            <th>
+                                @Html.DisplayNameFor(model => model.Foto)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Codigo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FechaNacimiento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LugarNacimiento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Activo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FechaCreacion)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="text-center">
+                                <td>
+                                    <img src="/img/avatar.png" style="height:75px; width:75px" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Codigo)
+                                </td>
+                                <td>
+                                    @item.Nombre @item.Apellido1 @item.Apellido2
+                                </td>
+                                <td>
+                                    @($"{item.FechaNacimiento.ToString("dd/MM/yyyy")} ({DateTime.Now.Year - item.FechaNacimiento.Year} años)")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LugarNacimiento)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Activo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaCreacion)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                                    <a class="btn btn-danger mx-2" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablaEstudiantes').DataTable({
+                scrollY: '270px',
+                scrollCollapse: true,
+                language: {
+                    "decimal": "",
+                    "emptytable": "No hay registros",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,73 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "GestionDeEstudiantesContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "GestionDeEstudiantes.WEB",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Calificaciones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Colegios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DetalleCalificaciones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Estudiantes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Materias]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PaseDeLista]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PaseDeListaOpciones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Usuarios]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "vmi545921.GestionDeEstudiantes",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

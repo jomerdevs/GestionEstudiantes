@@ -1,0 +1,125 @@
+﻿@model List<GestionDeEstudiantes.WEB.Entities.Estudiantes>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="text-center my-3">REGISTRO DE CALIFICACIONES</h2>
+<h3 class="my-2">@ViewData["Materia"] @ViewData["AñoEscolar"]</h3>
+
+<table id="calificaciones" class="table">
+    <thead>
+        <tr>
+            <th>
+                Codigo
+            </th>
+            <th>
+                Estudiante
+            </th>
+            <th>
+                Calificacion
+            </th>
+            <th>
+                Calificacion Literal
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Codigo <input id="IdEstudiante" type="hidden" value="@item.Id" /></td>
+                <td>@item.Nombre @item.Apellido1 @item.Apellido2</td>
+                <td><input type="text" style="text-align:center" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="3" class="calc-calificacion" estudianteId="@item.Id" /></td>
+                <td><input type="text" disabled style="text-align:center" class="est-@item.Id"/></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" type="button" onclick="Calificar();">PUBLICAR CALIFICACION</button>
+
+        @section Scripts
+        {
+            <script>
+
+             function Calificar()
+             {
+                $('#calificaciones > tbody > tr').each(function(index, tr){
+
+                    var idEstudiante = $(this).find('td:eq(0) input[type="hidden"]').val();
+                    var nota = $(this).find('td:eq(2) input[type="text"]').val();
+                    var calificacion = $(this).find('td:eq(3) input[type="text"]').val();
+
+                    GuardarCalificacion(idEstudiante, nota, calificacion);
+                });
+
+                ActualizarCalificacion();
+
+                alert('Calificaciones Reportadas con Exito!');
+                window.location.href = '/Calificaciones';
+             }
+
+             function GuardarCalificacion(idEstudiante, nota, calificacion)
+             {
+                $.ajax({
+                    url: '/Calificaciones/Calificar',
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        CalificacionId: '@ViewData["CalificacionId"]',
+                        IdEstudiante: idEstudiante, 
+                        Nota: nota, 
+                        Calificacion: calificacion 
+                    },
+                    success: function(){},
+                    error: function(){}
+                });
+             }
+
+             function ActualizarCalificacion()
+             {
+                $.ajax({
+                    url: '/Calificaciones/ActualizarCalificacion',
+                    type: 'POST',
+                    data: {
+                        CalificacionId: '@ViewData["CalificacionId"]'
+                    },
+                    success: function(){},
+                    error: function(){}
+                });
+             }
+
+            $(function(){
+                $('.calc-calificacion').keyup(function(){
+
+                    var nota = $(this).val();
+                    if(nota > 100)
+                    {
+                        nota = 100; 
+                        $(this).val(nota);
+                    }
+
+                    var literal = '';
+                    if(nota >= 90 && nota <= 100)
+                    {
+                        literal = 'A';
+                    }
+                    else if (nota >= 80 && nota <= 89)
+                    {
+                        literal = 'B';
+                    }
+                    else if (nota >= 70 && nota <= 79)
+                    {
+                        literal = 'C';
+                    }
+                    else {
+                        literal = 'F';
+                    }
+
+                    $('.est-' + $(this).attr('estudianteId') + '').val(literal);
+
+                });
+            });
+        </script>
+        }

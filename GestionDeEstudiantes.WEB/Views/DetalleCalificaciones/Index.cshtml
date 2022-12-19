@@ -1,0 +1,138 @@
+﻿@model IEnumerable<GestionDeEstudiantes.WEB.Entities.DetalleCalificaciones>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section Styles{
+    <link href="~/css/estilosdatatable/datatables.css" rel="stylesheet" />
+}
+
+<h2 class="text-center my-3">Detalle de Calificaciones</h2>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Agregar Detalle de Calificación</a>
+</p>
+<div class="row">
+    <div class="col-12">
+        <div class="card">            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="TablaDetalle" class="table display">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Código Calificación
+                                </th>
+                                <th>
+                                    Estudiante
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Calificacion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CalificacionLiteral)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FechaCreacion)
+                                </th>                         
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="text-center">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IdCalificacionNavigation.Codigo)
+                                    </td>
+                                    <td>
+                                        @item.IdEstudianteNavigation.Nombre @item.IdEstudianteNavigation.Apellido1 @item.IdEstudianteNavigation.Apellido2
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Calificacion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CalificacionLiteral)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                                    </td>                                   
+                                    
+                                    <td>
+                                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Editar</a> 
+                                        <a class="btn btn-secondary mx-2" asp-action="Details" asp-route-id="@item.Id">Detalle</a> 
+                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Estudiante</th>
+                                <th>Calificación</th>
+                                <th>CalificLiteral</th>
+                                <th>Fecha Creacion</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+        <script src="~/lib/carpetadatatable/jquerydatatable.js"></script>
+        <script src="~/lib/carpetadatatable/archivodatatable.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#TablaDetalle').DataTable({
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var column = this;
+                            var select = $('<select><option value=""></option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                    column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                });
+
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                    select.append('<option value="' + d + '">' + d + '</option>');
+                                });
+                        });
+                },
+                    scrollY: '250px',
+                    scrollCollapse: true,
+                    language: {
+                        "decimal": "",
+                        "emptytable": "No hay registros",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                        "infoEmpty": "Mostrando 0 a 0 de 0 Entradas",
+                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                        "loadingRecords": "Cargando...",
+                        "processing": "Procesando...",
+                        "search": "Buscar:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+                    }
+                });
+            });
+        </script>
+}

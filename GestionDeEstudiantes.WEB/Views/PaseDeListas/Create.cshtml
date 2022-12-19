@@ -1,0 +1,88 @@
+﻿@model GestionDeEstudiantes.WEB.Entities.PaseDeLista
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2 class="text-center my-3">Pase de Lista</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">Fecha</label>
+            <input type="date" id="Fecha" name="Fecha" class="form-control" />
+            </div>
+    </div>
+</div>
+
+<div class="row">
+<div class="col-lg-12">
+    <h3 class="my-2">PASE DE LISTA</h3>
+    <h4>@DateTime.Now.ToString("F")</h4>
+
+<table id="calificaciones" class="table">
+    <thead>
+        <tr>
+            <th>
+                Codigo
+            </th>
+            <th>
+                Estudiante
+            </th>
+            <th>
+                Estado
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+                @foreach (var item in (List<GestionDeEstudiantes.WEB.Entities.Estudiantes>)ViewData["Estudiantes"])
+                {
+                <tr>
+                    <td>@item.Codigo <input id="IdEstudiante" type="hidden" value="@item.Id" /></td>
+                    <td>@item.Nombre @item.Apellido1 @item.Apellido2</td>
+                        <td>
+                            <select asp-for="IdOpcion" class="form-control" asp-items="ViewBag.IdOpcion"></select>
+                    </td>
+                </tr>
+                }
+    </tbody>
+</table>
+</div>
+</div>
+
+<button class="btn btn-primary my-2" type="button" onclick="PasarLista();">PASAR LA LISTA</button>
+
+@section Scripts
+{
+    <script>
+
+        function PasarLista() {
+            $('#calificaciones > tbody > tr').each(function (index, tr) {
+
+                var idEstudiante = $(this).find('td:eq(0) input[type="hidden"]').val();
+                var idOption = $(this).find('td:eq(2) select option:selected').val();
+
+                GuardarCalificacion(idEstudiante, idOption);
+            });
+
+            alert('Pase de lista realizado con Exito!');
+            window.location.href = '/PaseDeListas';
+        }
+
+        function GuardarCalificacion(idEstudiante, idOption) {
+            $.ajax({
+                url: '/PaseDeListas/PasarLista',
+                type: 'POST',
+                async: false,
+                data: {
+                    IdEstudiante: idEstudiante,
+                    IdOption: idOption,
+                    Fecha: $('#Fecha').val()
+                },
+                success: function () { },
+                error: function () { }
+            });
+        }
+
+    </script>
+}

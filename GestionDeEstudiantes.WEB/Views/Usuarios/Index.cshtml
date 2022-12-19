@@ -1,0 +1,103 @@
+﻿@model IEnumerable<GestionDeEstudiantes.WEB.Entities.Usuarios>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section Styles{
+    <link href="~/css/estilosdatatable/datatables.css" rel="stylesheet" />
+}
+
+<h2 class="text-center my-3">Usuarios</h2>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Nuevo Usuario</a>
+</p>
+<div class="row">
+    <div class="col-12">
+        <div class="card">            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="TablaUsuarios" class="table display">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Usuario)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CorreoElectronico)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Activo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FechaCreacion)
+                                </th>
+                                <th>
+                                    Rol
+                                </th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Usuario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CorreoElectronico)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Activo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IdRolNavigation.Nombre)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                                        <a class="btn btn-secondary mx-2" asp-action="Details" asp-route-id="@item.Id">Detalle</a>
+                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/lib/carpetadatatable/jquerydatatable.js"></script>
+    <script src="~/lib/carpetadatatable/archivodatatable.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#TablaUsuarios').DataTable({
+                language: {
+                    "decimal": "",
+                    "emptytable": "No hay registros",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+}
